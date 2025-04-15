@@ -1,110 +1,130 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import AnimatedLogo from "../shared/AnimatedLogo";
 import { useEffect, useState } from "react";
 
 const SplashScreen = () => {
-  const [textVisible, setTextVisible] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [logoAnimationComplete, setLogoAnimationComplete] = useState(false);
   
-  useEffect(() => {
-    // Delay showing the text until the logo animation has started
-    const timer = setTimeout(() => {
-      setTextVisible(true);
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  // Handle logo animation completion
+  const handleLogoComplete = () => {
+    setLogoAnimationComplete(true);
+    // Add a delay before transitioning out
+    setTimeout(() => {
+      setShowSplash(false);
+    }, 1000);
+  };
   
   return (
-    <motion.div
-      className="fixed inset-0 z-50 overflow-hidden"
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* Artistic background with marble-inspired texture */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 overflow-hidden">
-        {/* Decorative elements resembling marble veins */}
-        <div className="absolute w-full h-full opacity-10">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div 
-              key={i}
-              className="absolute bg-white/20"
-              style={{
-                height: `${2 + Math.random() * 40}%`,
-                width: `${1 + Math.random() * 5}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                transform: `rotate(${Math.random() * 180}deg)`,
-                boxShadow: '0 0 20px 5px rgba(255, 255, 255, 0.1)'
-              }}
-            />
-          ))}
-        </div>
-      </div>
-      
-      {/* Handcrafted artistic overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.4)_100%)]" />
-      
-      {/* Main content with artistic handmade feel */}
-      <div className="relative h-full flex flex-col items-center justify-center">
-        {/* Artistic frame */}
-        <motion.div 
-          className="relative"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          {/* Decorative frame */}
-          <div className="absolute inset-0 -m-10 rounded-full bg-gradient-to-br from-amber-300/10 to-amber-600/10 blur-md"></div>
-          
-          {/* Logo */}
-          <AnimatedLogo className="w-48 h-48 md:w-56 md:h-56 mb-8 relative z-10" />
-        </motion.div>
-        
-        {/* Company name with artistic animation */}
+    <AnimatePresence>
+      {showSplash && (
         <motion.div
-          className="relative text-center mt-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: textVisible ? 1 : 0 }}
-          transition={{ duration: 1.2 }}
+          className="fixed inset-0 z-50 overflow-hidden"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          {/* Gold highlights */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-50 blur-sm">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-amber-300">GROMARBRE</h1>
+          {/* Futuristic background with subtle gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950">
+            {/* Decorative tech pattern elements */}
+            <div className="absolute w-full h-full">
+              {/* Horizontal grid lines */}
+              {Array.from({ length: 10 }).map((_, i) => (
+                <motion.div 
+                  key={`h-${i}`}
+                  className="absolute h-px w-full bg-blue-400/10"
+                  style={{ top: `${10 + i * 8}%` }}
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ scaleX: 1, opacity: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.1 * i,
+                    ease: "easeOut" 
+                  }}
+                />
+              ))}
+              
+              {/* Vertical grid lines */}
+              {Array.from({ length: 10 }).map((_, i) => (
+                <motion.div 
+                  key={`v-${i}`}
+                  className="absolute w-px h-full bg-blue-400/10"
+                  style={{ left: `${10 + i * 8}%` }}
+                  initial={{ scaleY: 0, opacity: 0 }}
+                  animate={{ scaleY: 1, opacity: 1 }}
+                  transition={{ 
+                    duration: 1.5, 
+                    delay: 0.1 * i,
+                    ease: "easeOut" 
+                  }}
+                />
+              ))}
+              
+              {/* Decorative circles for tech feel */}
+              {Array.from({ length: 6 }).map((_, i) => {
+                const size = 80 + Math.random() * 120;
+                return (
+                  <motion.div 
+                    key={`circle-${i}`}
+                    className="absolute rounded-full border border-blue-300/10"
+                    style={{
+                      width: `${size}px`,
+                      height: `${size}px`,
+                      left: `${Math.random() * 80 + 10}%`,
+                      top: `${Math.random() * 80 + 10}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 0.2 }}
+                    transition={{ 
+                      duration: 2, 
+                      delay: 0.2 * i,
+                      ease: "easeOut" 
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
           
-          {/* Main text */}
-          <motion.h1 
-            className="text-4xl md:text-5xl font-serif font-bold text-amber-500 relative"
-            initial={{ letterSpacing: "0.2em" }}
-            animate={{ letterSpacing: "0.05em" }}
-            transition={{ delay: 2.5, duration: 1.5, ease: "easeInOut" }}
-          >
-            GROMARBRE
-          </motion.h1>
+          {/* Radial overlay for better contrast */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.3)_100%)]" />
           
-          <motion.p 
-            className="text-sm md:text-base font-serif tracking-widest text-amber-200 mt-2 opacity-80"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: textVisible ? 0.8 : 0 }}
-            transition={{ delay: 2.8, duration: 0.8 }}
-          >
-            S.A.R.L
-          </motion.p>
-          
-          {/* Handcrafted slogan with artistic feel */}
-          <motion.p 
-            className="text-xs md:text-sm text-blue-100/70 mt-6 max-w-xs mx-auto font-serif italic"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: textVisible ? 0.7 : 0, y: 0 }}
-            transition={{ delay: 3, duration: 0.8 }}
-          >
-            The Art of Luxury Marble
-          </motion.p>
+          {/* Main content container */}
+          <div className="relative h-full flex flex-col items-center justify-center max-w-screen-md mx-auto px-6">
+            {/* Interactive logo component */}
+            <div className="w-64 h-64 md:w-80 md:h-80 mb-4 relative">
+              <AnimatedLogo onComplete={handleLogoComplete} className="w-full h-full" />
+            </div>
+            
+            {/* Title appears after logo animation completes */}
+            <AnimatePresence>
+              {logoAnimationComplete && (
+                <motion.div
+                  className="text-center mt-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <h1 className="text-3xl md:text-4xl font-light tracking-wider text-white">
+                    GROMARBRE
+                  </h1>
+                  
+                  <p className="text-sm uppercase tracking-widest text-blue-200 mt-2 opacity-80">
+                    S.A.R.L
+                  </p>
+                  
+                  <p className="text-xs md:text-sm text-blue-100/70 mt-6 max-w-xs mx-auto">
+                    Luxury marble craftsmanship with modern excellence
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </motion.div>
-      </div>
-    </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

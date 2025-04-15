@@ -31,28 +31,23 @@ function Router() {
 }
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time for splash screen
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+  // We no longer need to control loading state here
+  // The SplashScreen component will manage its own visibility
+  
   return (
     <QueryClientProvider client={queryClient}>
-      {loading ? (
-        <SplashScreen />
-      ) : (
-        <>
-          <Navbar />
+      {/* SplashScreen will auto-hide itself when animation completes */}
+      <SplashScreen />
+      
+      {/* Main application appears behind splash screen */}
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
           <Router />
-          <Footer />
-        </>
-      )}
+        </main>
+        <Footer />
+      </div>
+      
       <Toaster />
     </QueryClientProvider>
   );

@@ -1,172 +1,296 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AnimatedLogoProps {
   className?: string;
   animate?: boolean;
+  onComplete?: () => void;
 }
 
-const AnimatedLogo = ({ className = "", animate = true }: AnimatedLogoProps) => {
-  const pathRef = useRef<SVGPathElement>(null);
-  const ornamentalPathRef = useRef<SVGPathElement>(null);
-
+const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLogoProps) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
+  const maxSteps = 8;
+  
+  // Create refs for animation elements
+  const centerCircleRef = useRef<SVGCircleElement>(null);
+  const patternRefs = useRef<Array<SVGPathElement | null>>([]);
+  
+  // Set up array of pattern segments - each is a different part of the logo
+  const patterns = [
+    // Top segment
+    "M 100 30 L 100 15 A 85 85 0 0 1 135 32 L 120 40",
+    // Top-right segment
+    "M 150 70 L 168 63 A 85 85 0 0 1 168 137 L 150 130",
+    // Right segment
+    "M 120 160 L 135 168 A 85 85 0 0 1 65 168 L 80 160",
+    // Bottom segment
+    "M 50 130 L 32 137 A 85 85 0 0 1 32 63 L 50 70",
+    // Inner star pattern top
+    "M 100 50 L 100 85 L 135 60 Z",
+    // Inner star pattern right
+    "M 150 100 L 115 100 L 140 135 Z",
+    // Inner star pattern bottom
+    "M 100 150 L 100 115 L 65 140 Z",
+    // Inner star pattern left
+    "M 50 100 L 85 100 L 60 65 Z"
+  ];
+  
+  // Track whether user has completed viewing all steps
   useEffect(() => {
-    if (animate && pathRef.current) {
-      const length = pathRef.current.getTotalLength();
-      pathRef.current.style.strokeDasharray = `${length}`;
-      pathRef.current.style.strokeDashoffset = `${length}`;
-      
-      // Animate the path drawing
-      if (pathRef.current) {
-        pathRef.current.style.animation = `drawPath 3s ease-in-out forwards`;
-      }
-      
-      // Animate the ornamental path with delay
-      if (ornamentalPathRef.current) {
-        const ornamentalLength = ornamentalPathRef.current.getTotalLength();
-        ornamentalPathRef.current.style.strokeDasharray = `${ornamentalLength}`;
-        ornamentalPathRef.current.style.strokeDashoffset = `${ornamentalLength}`;
-        ornamentalPathRef.current.style.animation = `drawPath 2.5s ease-in-out 0.5s forwards`;
-      }
+    if (currentStep >= maxSteps && onComplete) {
+      const timer = setTimeout(() => {
+        onComplete();
+      }, 1000);
+      return () => clearTimeout(timer);
     }
-  }, [animate]);
-
-  // Handcrafted artistic logo with more intricate design
+  }, [currentStep, onComplete]);
+  
+  // Auto-advance animation if playing
+  useEffect(() => {
+    if (!animate || !isPlaying || currentStep >= maxSteps) return;
+    
+    const timer = setTimeout(() => {
+      setCurrentStep(prev => Math.min(prev + 1, maxSteps));
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, [animate, currentStep, isPlaying, maxSteps]);
+  
+  // Start the initial animation
+  useEffect(() => {
+    if (animate && !hasStarted) {
+      setHasStarted(true);
+    }
+  }, [animate, hasStarted]);
+  
+  // Handle play/pause toggle
+  const togglePlayPause = () => {
+    setIsPlaying(prev => !prev);
+  };
+  
+  // Handle advancing to next step
+  const advanceStep = () => {
+    if (currentStep < maxSteps) {
+      setCurrentStep(prev => prev + 1);
+    }
+  };
+  
   return (
-    <motion.div
-      className={`splash-logo-container ${className}`}
-      initial={animate ? { opacity: 0 } : { opacity: 1 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      style={{ position: "relative", width: "100%", height: "100%" }}
-    >
-      {/* Base SVG with handcrafted look */}
-      <motion.svg
+    <div className={`splash-logo-container relative ${className}`}>
+      {/* Futuristic SVG Logo */}
+      <svg
         viewBox="0 0 200 200"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ width: "100%", height: "100%" }}
-        initial={{ rotate: 0 }}
-        animate={{ rotate: animate ? 360 : 0 }}
-        transition={{ duration: 3, ease: "easeInOut" }}
+        className="w-full h-full"
       >
-        {/* Textured background - handcrafted marble-like effect */}
+        {/* Background gradients and effects */}
         <defs>
-          <radialGradient id="marble-bg" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stopColor="#1e6ca4" />
-            <stop offset="85%" stopColor="#164e77" />
-            <stop offset="100%" stopColor="#0e3654" />
+          <radialGradient id="center-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="70%" stopColor="#f0f8ff" />
+            <stop offset="100%" stopColor="#e6f0ff" />
           </radialGradient>
           
-          <pattern id="gold-texture" patternUnits="userSpaceOnUse" width="40" height="40">
-            <rect width="40" height="40" fill="#e3a13b" />
-            <path d="M0 20 Q 10 18, 20 20 T 40 20" stroke="#f1bf5f" strokeWidth="0.5" fill="none" opacity="0.7" />
-            <path d="M0 10 Q 10 8, 20 10 T 40 10" stroke="#d4922c" strokeWidth="0.5" fill="none" opacity="0.5" />
-            <path d="M0 30 Q 10 32, 20 30 T 40 30" stroke="#f1bf5f" strokeWidth="0.5" fill="none" opacity="0.6" />
-          </pattern>
+          <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0062b3" />
+            <stop offset="100%" stopColor="#004080" />
+          </linearGradient>
           
-          <filter id="paper-texture" x="0" y="0" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise" />
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+          <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+          
+          <filter id="inner-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feOffset dx="0" dy="1" />
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
         
-        {/* Circle with marble-like texture */}
-        <circle cx="100" cy="100" r="85" fill="url(#marble-bg)" filter="url(#paper-texture)" />
-        
-        {/* Main ornate pattern with hand-drawn look */}
-        <path
-          ref={pathRef}
-          d="M100 30
-            C 130 50, 150 70, 150 100
-            C 150 130, 130 150, 100 170
-            C 70 150, 50 130, 50 100
-            C 50 70, 70 50, 100 30
-            M 100 50
-            C 120 65, 135 80, 135 100
-            C 135 120, 120 135, 100 150
-            C 80 135, 65 120, 65 100
-            C 65 80, 80 65, 100 50"
-          stroke="url(#gold-texture)"
-          strokeWidth="3"
-          fill="none"
-          strokeLinecap="round"
-          style={{ 
-            strokeDasharray: "0",
-            strokeDashoffset: "0",
-            filter: "drop-shadow(0px 0px 2px rgba(255, 215, 0, 0.5))"
-          }}
-        />
-        
-        {/* Ornamental details with hand-drawn style */}
-        <path
-          ref={ornamentalPathRef}
-          d="M 70 80 Q 85 78, 100 80 Q 115 82, 130 80
-             M 70 120 Q 85 122, 100 120 Q 115 118, 130 120
-             M 80 70 Q 78 85, 80 100 Q 82 115, 80 130
-             M 120 70 Q 122 85, 120 100 Q 118 115, 120 130
-             M 60 60 Q 75 75, 90 90
-             M 140 60 Q 125 75, 110 90
-             M 60 140 Q 75 125, 90 110
-             M 140 140 Q 125 125, 110 110"
-          stroke="url(#gold-texture)"
-          strokeWidth="2"
-          fill="none"
-          strokeLinecap="round"
-          style={{ 
-            strokeDasharray: "0",
-            strokeDashoffset: "0",
-            filter: "drop-shadow(0px 0px 2px rgba(255, 215, 0, 0.5))"
-          }}
-        />
-        
-        {/* Handcrafted outer circle */}
+        {/* Logo background */}
         <circle 
           cx="100" 
           cy="100" 
-          r="90"
-          fill="none" 
-          stroke="url(#gold-texture)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          style={{ 
-            filter: "drop-shadow(0px 0px 3px rgba(255, 215, 0, 0.6))"
-          }}
+          r="95" 
+          fill="url(#blue-gradient)" 
+          opacity="0.8"
         />
         
-        {/* Artistic small details */}
-        <motion.g
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 2, duration: 1, ease: "backOut" }}
-        >
-          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
-            <circle
-              key={i}
-              cx={100 + 75 * Math.cos(angle * Math.PI / 180)}
-              cy={100 + 75 * Math.sin(angle * Math.PI / 180)}
-              r="3"
-              fill="#f1bf5f"
-              style={{ filter: "drop-shadow(0px 0px 2px gold)" }}
+        {/* Center circle - appears first */}
+        <motion.circle
+          ref={centerCircleRef}
+          cx="100"
+          cy="100"
+          r={currentStep >= 0 ? "40" : "0"}
+          fill="url(#center-glow)"
+          stroke="#fff"
+          strokeWidth="1"
+          filter="url(#glow-effect)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ 
+            scale: hasStarted ? 1 : 0,
+            opacity: hasStarted ? 1 : 0 
+          }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        />
+        
+        {/* Logo patterns - each appears in sequence */}
+        <g filter="url(#glow-effect)">
+          {patterns.map((pattern, index) => (
+            <motion.path
+              key={index}
+              ref={el => patternRefs.current[index] = el}
+              d={pattern}
+              fill={index < 4 ? "none" : "rgba(255, 255, 255, 0.8)"}
+              stroke="#fff"
+              strokeWidth="2"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ 
+                pathLength: currentStep > index ? 1 : 0,
+                opacity: currentStep > index ? 1 : 0
+              }}
+              transition={{ 
+                duration: 0.8, 
+                ease: "easeInOut",
+                delay: 0.1 * index
+              }}
             />
           ))}
-        </motion.g>
-      </motion.svg>
+        </g>
+        
+        {/* Outer ring */}
+        <motion.circle 
+          cx="100" 
+          cy="100" 
+          r="85"
+          fill="none" 
+          stroke="#fff"
+          strokeWidth="1.5"
+          strokeDasharray="4,4"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: currentStep >= 1 ? 0.7 : 0
+          }}
+          transition={{ duration: 0.5 }}
+        />
+        
+        {/* Outer glow */}
+        <motion.circle 
+          cx="100" 
+          cy="100" 
+          r="92"
+          fill="none" 
+          stroke="#80b3ff"
+          strokeWidth="1"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: currentStep >= maxSteps - 1 ? 0.3 : 0
+          }}
+          transition={{ duration: 0.5 }}
+        />
+        
+        {/* Company name appears at the final step */}
+        <motion.text
+          x="100"
+          y="185"
+          fontFamily="sans-serif"
+          fontSize="12"
+          fontWeight="bold"
+          textAnchor="middle"
+          fill="#fff"
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: currentStep >= maxSteps ? 1 : 0
+          }}
+          transition={{ duration: 1 }}
+        >
+          GROMARBRE
+        </motion.text>
+      </svg>
       
-      {/* Add handcrafted style with CSS */}
+      {/* Interactive controls */}
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 gap-4">
+        {/* Play/Pause button */}
+        <motion.button
+          className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
+          onClick={togglePlayPause}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isPlaying ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="6" y="5" width="4" height="14" />
+              <rect x="14" y="5" width="4" height="14" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="5 3 19 12 5 21" />
+            </svg>
+          )}
+        </motion.button>
+        
+        {/* Next step button */}
+        <motion.button
+          className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
+          onClick={advanceStep}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          disabled={currentStep >= maxSteps}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="5 4 15 12 5 20" />
+            <line x1="19" y1="5" x2="19" y2="19" />
+          </svg>
+        </motion.button>
+      </div>
+      
+      {/* Step indicator */}
+      <div className="absolute top-4 left-0 right-0 flex justify-center gap-1">
+        {Array.from({ length: maxSteps }).map((_, index) => (
+          <motion.div
+            key={index}
+            className="w-2 h-2 rounded-full"
+            initial={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+            animate={{ 
+              backgroundColor: currentStep > index 
+                ? "rgba(255, 255, 255, 0.9)" 
+                : "rgba(255, 255, 255, 0.3)"
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Skip button */}
+      {animate && (
+        <motion.button
+          className="absolute bottom-4 right-4 text-xs text-white/70 underline"
+          onClick={onComplete}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hasStarted ? 1 : 0 }}
+          transition={{ delay: 2 }}
+        >
+          Skip
+        </motion.button>
+      )}
+      
+      {/* CSS for animations */}
       <style dangerouslySetInnerHTML={{ 
         __html: `
-          @keyframes drawPath {
-            to {
-              stroke-dashoffset: 0;
-            }
+          .splash-logo-container {
+            filter: drop-shadow(0px 0px 15px rgba(0, 128, 255, 0.3));
           }
           
-          .splash-logo-container {
-            filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3));
+          @keyframes rotateLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
           }
         `
       }} />
-    </motion.div>
+    </div>
   );
 };
 
