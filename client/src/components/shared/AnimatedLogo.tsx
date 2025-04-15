@@ -11,31 +11,14 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
   const [currentStep, setCurrentStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [hasStarted, setHasStarted] = useState(false);
-  const maxSteps = 8;
+  const maxSteps = 8; // Total animation steps
   
-  // Create refs for animation elements
-  const centerCircleRef = useRef<SVGCircleElement>(null);
-  const patternRefs = useRef<Array<SVGPathElement | null>>([]);
-  
-  // Set up array of pattern segments - each is a different part of the logo
-  const patterns = [
-    // Top segment
-    "M 100 30 L 100 15 A 85 85 0 0 1 135 32 L 120 40",
-    // Top-right segment
-    "M 150 70 L 168 63 A 85 85 0 0 1 168 137 L 150 130",
-    // Right segment
-    "M 120 160 L 135 168 A 85 85 0 0 1 65 168 L 80 160",
-    // Bottom segment
-    "M 50 130 L 32 137 A 85 85 0 0 1 32 63 L 50 70",
-    // Inner star pattern top
-    "M 100 50 L 100 85 L 135 60 Z",
-    // Inner star pattern right
-    "M 150 100 L 115 100 L 140 135 Z",
-    // Inner star pattern bottom
-    "M 100 150 L 100 115 L 65 140 Z",
-    // Inner star pattern left
-    "M 50 100 L 85 100 L 60 65 Z"
-  ];
+  // Define colors
+  const colors = {
+    gold: "#c9a050",
+    darkBlue: "#0e4b78",
+    white: "#ffffff"
+  };
   
   // Track whether user has completed viewing all steps
   useEffect(() => {
@@ -77,131 +60,177 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
     }
   };
   
-  return (
-    <div className={`splash-logo-container relative ${className}`}>
-      {/* Futuristic SVG Logo */}
-      <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
-      >
-        {/* Background gradients and effects */}
-        <defs>
-          <radialGradient id="center-glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="70%" stopColor="#f0f8ff" />
-            <stop offset="100%" stopColor="#e6f0ff" />
-          </radialGradient>
-          
-          <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0062b3" />
-            <stop offset="100%" stopColor="#004080" />
-          </linearGradient>
-          
-          <filter id="glow-effect" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-          
-          <filter id="inner-shadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feOffset dx="0" dy="1" />
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
-        
-        {/* Logo background */}
-        <circle 
+  // Moroccan pattern elements to be animated in sequence
+  const renderMoroccanPattern = () => {
+    return (
+      <>
+        {/* Center point */}
+        <motion.circle 
           cx="100" 
           cy="100" 
-          r="95" 
-          fill="url(#blue-gradient)" 
-          opacity="0.8"
-        />
-        
-        {/* Center circle - appears first */}
-        <motion.circle
-          ref={centerCircleRef}
-          cx="100"
-          cy="100"
-          r={currentStep >= 0 ? "40" : "0"}
-          fill="url(#center-glow)"
-          stroke="#fff"
-          strokeWidth="1"
-          filter="url(#glow-effect)"
+          r="10" 
+          fill={colors.white}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ 
-            scale: hasStarted ? 1 : 0,
-            opacity: hasStarted ? 1 : 0 
+            scale: currentStep >= 0 ? 1 : 0,
+            opacity: currentStep >= 0 ? 1 : 0
           }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8 }}
         />
         
-        {/* Logo patterns - each appears in sequence */}
-        <g filter="url(#glow-effect)">
-          {patterns.map((pattern, index) => (
+        {/* Inner circle with decorative elements */}
+        <motion.g
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: currentStep >= 1 ? 1 : 0,
+            opacity: currentStep >= 1 ? 1 : 0
+          }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
+          <circle cx="100" cy="100" r="20" fill="none" stroke={colors.gold} strokeWidth="1.5" />
+          
+          {/* Inner flower petals */}
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
             <motion.path
-              key={index}
-              ref={el => patternRefs.current[index] = el}
-              d={pattern}
-              fill={index < 4 ? "none" : "rgba(255, 255, 255, 0.8)"}
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
+              key={`inner-petal-${i}`}
+              d="M 100 85 Q 95 80, 100 75 Q 105 80, 100 85 Z"
+              fill={colors.darkBlue}
+              transform={`rotate(${angle} 100 100)`}
+              initial={{ scale: 0, opacity: 0 }}
               animate={{ 
-                pathLength: currentStep > index ? 1 : 0,
-                opacity: currentStep > index ? 1 : 0
+                scale: currentStep >= 1 ? 1 : 0,
+                opacity: currentStep >= 1 ? 1 : 0
               }}
               transition={{ 
-                duration: 0.8, 
-                ease: "easeInOut",
-                delay: 0.1 * index
+                duration: 0.5, 
+                delay: 0.1 + (i * 0.05)
               }}
             />
           ))}
-        </g>
+        </motion.g>
+        
+        {/* Middle ring with motifs */}
+        <motion.g
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: currentStep >= 2 ? 1 : 0,
+            opacity: currentStep >= 2 ? 1 : 0
+          }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <circle cx="100" cy="100" r="35" fill="none" stroke={colors.darkBlue} strokeWidth="1.5" />
+          
+          {/* Middle decorative elements */}
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+            <motion.path
+              key={`middle-element-${i}`}
+              d="M 100 65 L 105 60 L 100 55 L 95 60 Z"
+              fill={colors.gold}
+              transform={`rotate(${angle} 100 100)`}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: currentStep >= 3 ? 1 : 0,
+                opacity: currentStep >= 3 ? 1 : 0
+              }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.3 + (i * 0.05)
+              }}
+            />
+          ))}
+        </motion.g>
+        
+        {/* Outer flower petals */}
+        <motion.g>
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+            <motion.path
+              key={`petal-${i}`}
+              d="M 100 35 Q 90 25, 100 15 Q 110 25, 100 35 Z"
+              fill={colors.darkBlue}
+              transform={`rotate(${angle} 100 100)`}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: currentStep >= 4 ? 1 : 0,
+                opacity: currentStep >= 4 ? 1 : 0
+              }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.4 + (i * 0.05)
+              }}
+            />
+          ))}
+        </motion.g>
+        
+        {/* Large decorative elements */}
+        <motion.g>
+          {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+            <motion.path
+              key={`large-petal-${i}`}
+              d="M 100 50 Q 85 25, 100 0 Q 115 25, 100 50 Z"
+              fill={colors.darkBlue}
+              stroke={colors.white}
+              strokeWidth="0.5"
+              transform={`rotate(${angle} 100 100)`}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: currentStep >= 5 ? 1 : 0,
+                opacity: currentStep >= 5 ? 1 : 0
+              }}
+              transition={{ 
+                duration: 0.7, 
+                delay: 0.5 + (i * 0.05)
+              }}
+            />
+          ))}
+        </motion.g>
+        
+        {/* Decorative dots */}
+        <motion.g>
+          {[0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5].map((angle, i) => (
+            <motion.circle
+              key={`dot-${i}`}
+              cx={100 + 95 * Math.cos(angle * Math.PI / 180)}
+              cy={100 + 95 * Math.sin(angle * Math.PI / 180)}
+              r="4"
+              fill={colors.gold}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: currentStep >= 6 ? 1 : 0,
+                opacity: currentStep >= 6 ? 1 : 0
+              }}
+              transition={{ 
+                duration: 0.3, 
+                delay: 0.7 + (i * 0.03)
+              }}
+            />
+          ))}
+        </motion.g>
         
         {/* Outer ring */}
-        <motion.circle 
-          cx="100" 
-          cy="100" 
-          r="85"
-          fill="none" 
-          stroke="#fff"
-          strokeWidth="1.5"
-          strokeDasharray="4,4"
-          initial={{ opacity: 0 }}
+        <motion.circle
+          cx="100"
+          cy="100"
+          r="90"
+          fill="none"
+          stroke={colors.gold}
+          strokeWidth="2"
+          initial={{ pathLength: 0, opacity: 0 }}
           animate={{ 
-            opacity: currentStep >= 1 ? 0.7 : 0
+            pathLength: currentStep >= 7 ? 1 : 0,
+            opacity: currentStep >= 7 ? 1 : 0
           }}
-          transition={{ duration: 0.5 }}
-        />
-        
-        {/* Outer glow */}
-        <motion.circle 
-          cx="100" 
-          cy="100" 
-          r="92"
-          fill="none" 
-          stroke="#80b3ff"
-          strokeWidth="1"
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: currentStep >= maxSteps - 1 ? 0.3 : 0
-          }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 1, delay: 0.8 }}
         />
         
         {/* Company name appears at the final step */}
         <motion.text
           x="100"
           y="185"
-          fontFamily="sans-serif"
-          fontSize="12"
+          fontFamily="serif"
+          fontSize="14"
           fontWeight="bold"
           textAnchor="middle"
-          fill="#fff"
+          fill={colors.gold}
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: currentStep >= maxSteps ? 1 : 0
@@ -210,10 +239,47 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
         >
           GROMARBRE
         </motion.text>
+      </>
+    );
+  };
+  
+  return (
+    <div className={`splash-logo-container relative ${className}`}>
+      {/* Moroccan Pattern SVG */}
+      <svg
+        viewBox="0 0 200 200"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full"
+      >
+        {/* Background */}
+        <defs>
+          <radialGradient id="bg-gradient" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+            <stop offset="0%" stopColor={colors.darkBlue} />
+            <stop offset="100%" stopColor="#072b4a" />
+          </radialGradient>
+          
+          <filter id="shadow-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        
+        {/* Main background circle */}
+        <circle 
+          cx="100" 
+          cy="100" 
+          r="100" 
+          fill="url(#bg-gradient)" 
+        />
+        
+        {/* Render the Moroccan pattern elements */}
+        <g filter="url(#shadow-glow)">
+          {renderMoroccanPattern()}
+        </g>
       </svg>
       
       {/* Interactive controls */}
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 gap-4">
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4 gap-4 z-10">
         {/* Play/Pause button */}
         <motion.button
           className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
@@ -257,7 +323,7 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
             initial={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
             animate={{ 
               backgroundColor: currentStep > index 
-                ? "rgba(255, 255, 255, 0.9)" 
+                ? `rgba(201, 160, 80, 0.9)` 
                 : "rgba(255, 255, 255, 0.3)"
             }}
           />
@@ -265,7 +331,7 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
       </div>
       
       {/* Skip button */}
-      {animate && (
+      {animate && onComplete && (
         <motion.button
           className="absolute bottom-4 right-4 text-xs text-white/70 underline"
           onClick={onComplete}
@@ -281,7 +347,7 @@ const AnimatedLogo = ({ className = "", animate = true, onComplete }: AnimatedLo
       <style dangerouslySetInnerHTML={{ 
         __html: `
           .splash-logo-container {
-            filter: drop-shadow(0px 0px 15px rgba(0, 128, 255, 0.3));
+            filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.3));
           }
           
           @keyframes rotateLogo {

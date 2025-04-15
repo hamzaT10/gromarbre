@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .dark-fill { fill: #0e4b78; }
+    .light-fill { fill: #ffffff; }
+    .medium-fill { fill: #c9a050; }
+  </style>
+  
+  <!-- Center Circle -->
+  <circle cx="400" cy="400" r="30" class="light-fill" />
+  <circle cx="400" cy="400" r="25" stroke="#c9a050" stroke-width="2" fill="none" />
+  
+  <!-- Inner Flower Pattern -->
+  <g id="inner-flower">
+    <path d="M 400 375 Q 400 350, 425 350 Q 450 350, 450 375 Q 450 400, 425 425 Q 400 425, 400 400 Z" class="dark-fill" />
+    <path d="M 400 375 Q 400 350, 375 350 Q 350 350, 350 375 Q 350 400, 375 425 Q 400 425, 400 400 Z" class="dark-fill" />
+    <path d="M 425 350 Q 425 325, 400 325 Q 375 325, 375 350 Q 400 350, 400 375 Q 425 350, 425 350 Z" class="dark-fill" />
+    <path d="M 425 425 Q 425 450, 400 450 Q 375 450, 375 425 Q 400 425, 400 400 Q 425 425, 425 425 Z" class="dark-fill" />
+  </g>
+  
+  <!-- Rotate and duplicate inner flower pattern -->
+  <use href="#inner-flower" transform="rotate(45 400 400)" />
+  
+  <!-- Middle Ring -->
+  <circle cx="400" cy="400" r="145" stroke="#0e4b78" stroke-width="2" fill="none" />
+  <circle cx="400" cy="400" r="150" stroke="#c9a050" stroke-width="1" fill="none" />
+  
+  <!-- Middle flower petals -->
+  <g id="middle-petals">
+    <path d="M 400 250 Q 415 260, 430 250 Q 445 240, 445 220 Q 445 200, 430 190 Q 415 180, 400 190 Q 385 180, 370 190 Q 355 200, 355 220 Q 355 240, 370 250 Q 385 260, 400 250 Z" class="dark-fill" />
+  </g>
+  
+  <!-- Rotate and duplicate middle petals -->
+  <use href="#middle-petals" transform="rotate(45 400 400)" />
+  <use href="#middle-petals" transform="rotate(90 400 400)" />
+  <use href="#middle-petals" transform="rotate(135 400 400)" />
+  <use href="#middle-petals" transform="rotate(180 400 400)" />
+  <use href="#middle-petals" transform="rotate(225 400 400)" />
+  <use href="#middle-petals" transform="rotate(270 400 400)" />
+  <use href="#middle-petals" transform="rotate(315 400 400)" />
+  
+  <!-- Outer Ring -->
+  <circle cx="400" cy="400" r="245" stroke="#0e4b78" stroke-width="2" fill="none" />
+  <circle cx="400" cy="400" r="250" stroke="#c9a050" stroke-width="1" fill="none" />
+  
+  <!-- Outer flower petals -->
+  <g id="outer-petals">
+    <path d="M 400 150 Q 425 165, 450 150 Q 475 135, 475 100 Q 475 65, 450 50 Q 425 35, 400 50 Q 375 35, 350 50 Q 325 65, 325 100 Q 325 135, 350 150 Q 375 165, 400 150 Z" class="dark-fill" />
+  </g>
+  
+  <!-- Rotate and duplicate outer petals -->
+  <use href="#outer-petals" transform="rotate(45 400 400)" />
+  <use href="#outer-petals" transform="rotate(90 400 400)" />
+  <use href="#outer-petals" transform="rotate(135 400 400)" />
+  <use href="#outer-petals" transform="rotate(180 400 400)" />
+  <use href="#outer-petals" transform="rotate(225 400 400)" />
+  <use href="#outer-petals" transform="rotate(270 400 400)" />
+  <use href="#outer-petals" transform="rotate(315 400 400)" />
+  
+  <!-- Decorative dots around outer edge -->
+  <g id="outer-dots">
+    <circle cx="400" cy="125" r="8" class="medium-fill" />
+    <circle cx="400" cy="675" r="8" class="medium-fill" />
+    <circle cx="125" cy="400" r="8" class="medium-fill" />
+    <circle cx="675" cy="400" r="8" class="medium-fill" />
+  </g>
+  
+  <!-- Rotate and duplicate outer dots -->
+  <use href="#outer-dots" transform="rotate(45 400 400)" />
+  
+  <!-- Additional decorative elements -->
+  <g id="decorative-elements">
+    <path d="M 400 265 L 415 290 L 400 315 L 385 290 Z" class="medium-fill" />
+    <path d="M 400 485 L 415 510 L 400 535 L 385 510 Z" class="medium-fill" />
+    <path d="M 265 400 L 290 415 L 315 400 L 290 385 Z" class="medium-fill" />
+    <path d="M 485 400 L 510 415 L 535 400 L 510 385 Z" class="medium-fill" />
+  </g>
+  
+  <!-- Rotate and duplicate decorative elements -->
+  <use href="#decorative-elements" transform="rotate(45 400 400)" />
+</svg>
