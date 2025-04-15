@@ -1,0 +1,43 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dark Emperador marble texture pattern -->
+    <pattern id="emperador-pattern" patternUnits="userSpaceOnUse" width="200" height="200">
+      <rect width="200" height="200" fill="#3e2723"/>
+      
+      <!-- Rich veining -->
+      <path d="M0,90 Q30,110 70,80 Q100,60 130,90 Q160,120 200,100" fill="none" stroke="#9a7b4f" stroke-width="2" opacity="0.7"/>
+      <path d="M20,30 Q50,10 90,40 Q130,70 170,50 Q210,30 250,60" fill="none" stroke="#8b5e3c" stroke-width="1.5" opacity="0.5"/>
+      <path d="M180,0 Q160,40 200,80 Q240,120 190,170" fill="none" stroke="#7d5427" stroke-width="2.5" opacity="0.4"/>
+      <path d="M0,150 Q40,180 80,160 Q120,140 150,180 Q180,210 220,190" fill="none" stroke="#b8997d" stroke-width="1" opacity="0.6"/>
+      
+      <!-- Additional texture elements -->
+      <ellipse cx="50" cy="50" rx="8" ry="3" fill="#614b35" opacity="0.3" transform="rotate(30 50 50)"/>
+      <ellipse cx="120" cy="100" rx="10" ry="4" fill="#7d5e41" opacity="0.25" transform="rotate(-15 120 100)"/>
+      <ellipse cx="160" cy="150" rx="7" ry="3" fill="#9d7a56" opacity="0.2" transform="rotate(45 160 150)"/>
+      <ellipse cx="80" cy="170" rx="9" ry="4" fill="#866246" opacity="0.15" transform="rotate(-30 80 170)"/>
+      
+      <!-- Crystalline flecks -->
+      <circle cx="30" cy="40" r="1" fill="#e0c4a3" opacity="0.7"/>
+      <circle cx="130" cy="70" r="0.8" fill="#d4b795" opacity="0.6"/>
+      <circle cx="170" cy="120" r="1.2" fill="#caae8c" opacity="0.5"/>
+      <circle cx="70" cy="150" r="0.7" fill="#f0d4b4" opacity="0.6"/>
+      <circle cx="110" cy="30" r="0.9" fill="#d9bd9e" opacity="0.5"/>
+      <circle cx="160" cy="60" r="1.1" fill="#e5cbb0" opacity="0.4"/>
+      <circle cx="40" cy="100" r="0.7" fill="#cab292" opacity="0.5"/>
+      <circle cx="190" cy="140" r="1" fill="#e8d1b8" opacity="0.6"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#2d1e1b"/>
+  
+  <!-- Marble slab with subtle shadow -->
+  <rect x="50" y="50" width="700" height="500" rx="5" ry="5" fill="url(#emperador-pattern)" stroke="#2a1915" stroke-width="1" filter="drop-shadow(0px 10px 10px rgba(0,0,0,0.3))"/>
+  
+  <!-- Highlight to give depth -->
+  <rect x="70" y="70" width="660" height="460" rx="2" ry="2" fill="none" stroke="#8b5e3c" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Product name -->
+  <text x="400" y="550" font-family="serif" font-size="24" text-anchor="middle" fill="#e0c4a3">Emperador Dark</text>
+  <text x="400" y="575" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#b8997d">Elegant Spanish Marble</text>
+</svg>
