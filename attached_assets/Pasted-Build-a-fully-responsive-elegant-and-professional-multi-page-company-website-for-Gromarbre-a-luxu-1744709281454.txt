@@ -1,0 +1,67 @@
+Build a fully responsive, elegant, and professional multi-page company website for Gromarbre, a luxury marble company based in Casablanca, Morocco.
+
+Features:
+
+A Splash Screen at site load with the Gromarbre logo being gradually drawn as a loading animation before entering.
+
+Main Home Page (Landing Page) should include:
+
+A Hero section with marble images or video background, company name, and tagline.
+
+An About section explaining the company’s 20+ years of experience, Casablanca base, and specialization in custom marble design projects for hotels, universities, residences, etc.
+
+A preview of Services (list a few main services with icons and descriptions, and a button linking to a full Services page).
+
+A preview of Recent Projects (show 2-3 featured projects with image thumbnails, title, and a "See More Projects" button linking to a Projects page).
+
+A preview of Marble Products (show 3-4 marble types with image, name, and a "See All Marble Products" button linking to a Product Showroom page).
+
+A Clients / Partners section with logos and names of big companies and projects they worked with.
+
+A contact section with form (name, email, phone, message) and embedded Google Maps of the Casablanca showroom.
+
+Services Page:
+
+Full list of services with descriptions and visuals/icons for each (design, installation, maintenance, custom marble creation, etc.).
+
+Projects Page:
+
+Grid or list of all major projects (hotels, residences, universities) with images, names, and short descriptions.
+
+Each project links to its own dedicated Project Detail Page containing:
+
+Project name
+
+Client
+
+Description of work done
+
+4-5 images of the marble work completed
+
+Project location and completion date
+
+Product Showroom Page:
+
+Grid of marble product categories (marble types) with images and names.
+
+Each product links to its own Product Detail Page containing:
+
+Product name
+
+Description
+
+Available colors and finishes
+
+Example images of past installations using this marble
+
+Optional price range or "Request Quote" button
+
+Contact Page:
+
+Clean contact form
+
+Company contact details
+
+Embedded Google Map
+
+Social media links
