@@ -1,7 +1,9 @@
 import { Link } from "wouter";
 import AnimatedLogo from "../shared/AnimatedLogo";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
   return (
     <footer className="bg-blue-dark text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,39 +25,39 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link href="/">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Home</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('nav.home')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/#about">
-                  <a className="text-gray-300 hover:text-gold transition-colors">About Us</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.about.title')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Services</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('nav.services')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/projects">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Projects</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('nav.projects')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/products">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Products</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('nav.products')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Contact</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('nav.contact')}</a>
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-serif font-semibold mb-6">Services</h3>
+            <h3 className="text-lg font-serif font-semibold mb-6">{t('footer.services')}</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/services#custom-design">
@@ -125,7 +127,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-8 border-t border-opacity-20 border-blue-light text-center text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Gromarbre S.A.R.L. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Gromarbre S.A.R.L. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

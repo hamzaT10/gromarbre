@@ -2,12 +2,37 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { products } from "@/lib/constants";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const categories = ["All", "White", "Beige", "Brown", "Black", "Colored"];
 
 const ProductsPage = () => {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState("All");
+
+  const products = [
+    {
+      id: 'calacatta-gold',
+      nameKey: 'home.products.calacatta',
+      descKey: 'home.products.calacatta.desc',
+      image: '/images/marble/calacatta-gold.svg',
+      category: 'White'
+    },
+    {
+      id: 'carrara-white', 
+      nameKey: 'home.products.carrara',
+      descKey: 'home.products.carrara.desc',
+      image: '/images/marble/carrara-white.svg',
+      category: 'White'
+    },
+    {
+      id: 'emperador-dark',
+      nameKey: 'home.products.emperador', 
+      descKey: 'home.products.emperador.desc',
+      image: '/images/marble/emperador-dark.svg',
+      category: 'Brown'
+    }
+  ];
   
   const filteredProducts = activeCategory === "All" 
     ? products 
@@ -36,7 +61,7 @@ const ProductsPage = () => {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white mb-4">
-                Marble Collection
+                {t('home.products.title')}
               </h1>
               <div className="w-24 h-1 bg-gold mx-auto my-6"></div>
               <p className="max-w-2xl mx-auto text-lg text-gray-300">
@@ -91,8 +116,8 @@ const ProductsPage = () => {
                     <span className="inline-block px-3 py-1 bg-gold-light bg-opacity-20 text-gold-dark text-xs rounded-full mb-2">
                       {product.category}
                     </span>
-                    <h3 className="font-serif text-xl font-bold text-charcoal">{product.name}</h3>
-                    <p className="mt-2 text-gray-600 text-sm">{product.shortDescription}</p>
+                    <h3 className="font-serif text-xl font-bold text-charcoal">{t(product.nameKey)}</h3>
+                    <p className="mt-2 text-gray-600 text-sm">{t(product.descKey)}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <Link href={`/products/${product.id}`}>
                         <a className="inline-block text-gold hover:underline text-sm">

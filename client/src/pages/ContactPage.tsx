@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -19,6 +20,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const ContactPage = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -80,11 +82,11 @@ const ContactPage = () => {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white mb-4">
-                Contact Us
+                {t('contact.title')}
               </h1>
               <div className="w-24 h-1 bg-gold mx-auto my-6"></div>
               <p className="max-w-2xl mx-auto text-lg text-gray-300">
-                Ready to transform your space with timeless elegance? Reach out to our team.
+                {t('contact.subtitle')}
               </p>
             </motion.div>
           </div>

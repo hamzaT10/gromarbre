@@ -1,7 +1,9 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const About = () => {
   const { ref } = useScrollReveal();
+  const { t } = useLanguage();
 
   return (
     <section id="about" ref={ref} className="py-20 bg-white reveal-section">
@@ -15,37 +17,31 @@ const About = () => {
             />
           </div>
           <div className="lg:w-1/2">
-            <div className="text-sm font-medium text-gold uppercase tracking-wider">About Gromarbre</div>
+            <div className="text-sm font-medium text-gold uppercase tracking-wider">{t('home.about.title')}</div>
             <h2 className="mt-2 text-3xl sm:text-4xl font-serif font-bold text-charcoal">
-              Two Decades of Marble Excellence
+              {t('home.about.title')}
             </h2>
             <div className="mt-6 space-y-5 text-gray-600">
               <p>
-                Based in Casablanca, Morocco, Gromarbre S.A.R.L has established itself as the premier provider of luxury marble solutions for discerning clients throughout the region.
-              </p>
-              <p>
-                Our master craftsmen work with the world's finest marble, transforming raw material into breathtaking design elements for hotels, universities, prestigious residences, and commercial spaces.
-              </p>
-              <p>
-                What sets us apart is our commitment to blending traditional craftsmanship with innovative design techniques, ensuring every project meets the highest standards of excellence.
+                {t('home.about.description')}
               </p>
             </div>
             <div className="mt-10 grid grid-cols-2 gap-8">
               <div>
-                <div className="font-serif text-gold text-4xl font-bold">20+</div>
-                <div className="mt-2 text-gray-600">Years of Experience</div>
+                <div className="font-serif text-gold text-4xl font-bold">25+</div>
+                <div className="mt-2 text-gray-600">{t('home.about.experience')}</div>
               </div>
               <div>
                 <div className="font-serif text-gold text-4xl font-bold">500+</div>
-                <div className="mt-2 text-gray-600">Projects Completed</div>
+                <div className="mt-2 text-gray-600">{t('home.about.projects')}</div>
               </div>
               <div>
-                <div className="font-serif text-gold text-4xl font-bold">100+</div>
-                <div className="mt-2 text-gray-600">Marble Varieties</div>
+                <div className="font-serif text-gold text-4xl font-bold">98%</div>
+                <div className="mt-2 text-gray-600">{t('home.about.satisfaction')}</div>
               </div>
               <div>
                 <div className="font-serif text-gold text-4xl font-bold">50+</div>
-                <div className="mt-2 text-gray-600">Expert Craftsmen</div>
+                <div className="mt-2 text-gray-600">Artisans Experts</div>
               </div>
             </div>
           </div>

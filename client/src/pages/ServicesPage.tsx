@@ -1,8 +1,40 @@
 import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
-import { services } from "@/lib/constants";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const ServicesPage = () => {
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      id: "custom-design",
+      titleKey: "home.services.design",
+      descKey: "home.services.design.desc",
+      icon: "fas fa-pencil-ruler",
+      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000"
+    },
+    {
+      id: "installation",
+      titleKey: "home.services.installation",
+      descKey: "home.services.installation.desc",
+      icon: "fas fa-hammer",
+      image: "https://images.unsplash.com/photo-1581775231124-5f9258fef7b3?q=80&w=2000"
+    },
+    {
+      id: "restoration",
+      titleKey: "home.services.maintenance",
+      descKey: "home.services.maintenance.desc",
+      icon: "fas fa-magic",
+      image: "https://images.unsplash.com/photo-1636397210916-7c636e461444?q=80&w=2000"
+    },
+    {
+      id: "fabrication",
+      titleKey: "home.services.fabrication",
+      descKey: "home.services.fabrication.desc",
+      icon: "fas fa-tools",
+      image: "https://images.unsplash.com/photo-1574966739987-65e1952f7ae3?q=80&w=2000"
+    }
+  ];
   return (
     <>
       <Helmet>
@@ -26,12 +58,9 @@ const ServicesPage = () => {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl sm:text-5xl font-serif font-bold text-white mb-4">
-                Our Services
+                {t('home.services.title')}
               </h1>
               <div className="w-24 h-1 bg-gold mx-auto my-6"></div>
-              <p className="max-w-2xl mx-auto text-lg text-gray-300">
-                From concept to completion, we provide comprehensive marble solutions tailored to your needs.
-              </p>
             </motion.div>
           </div>
         </section>
@@ -55,7 +84,7 @@ const ServicesPage = () => {
                   <div className="lg:w-1/2">
                     <img 
                       src={service.image} 
-                      alt={service.title} 
+                      alt={t(service.titleKey)} 
                       className="rounded-lg shadow-xl w-full h-80 object-cover"
                     />
                   </div>
@@ -65,21 +94,12 @@ const ServicesPage = () => {
                         <i className={`${service.icon} text-white text-xl`}></i>
                       </div>
                       <h2 className="text-3xl font-serif font-bold text-charcoal">
-                        {service.title}
+                        {t(service.titleKey)}
                       </h2>
                     </div>
                     <div className="mt-4 space-y-4 text-gray-600">
-                      <p>{service.description}</p>
-                      <p>{service.longDescription}</p>
+                      <p>{t(service.descKey)}</p>
                     </div>
-                    <ul className="mt-6 space-y-2">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <i className="fas fa-check-circle text-gold mt-1 mr-2"></i>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </motion.div>
               ))}

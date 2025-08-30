@@ -1,7 +1,9 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const Hero = () => {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
@@ -19,22 +21,20 @@ const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-4">
-            <span className="block">The Art of</span>
-            <span className="block text-gold">Marble Excellence</span>
+            {t('home.hero.title')}
           </h1>
           <p className="mt-6 text-xl text-white max-w-3xl mx-auto">
-            With over 20 years of experience, Gromarbre brings timeless elegance to luxury spaces
-            throughout Morocco and beyond.
+            {t('home.hero.subtitle')}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <Link href="/projects">
               <a className="marble-button inline-block px-8 py-3 border-2 border-gold text-gold font-medium rounded hover:bg-gold hover:text-white transition-colors">
-                View Our Projects
+                {t('home.hero.cta')}
               </a>
             </Link>
             <Link href="/contact">
               <a className="marble-button inline-block px-8 py-3 bg-gold text-white font-medium rounded hover:bg-gold-dark transition-colors">
-                Contact Us
+                {t('home.hero.cta2')}
               </a>
             </Link>
           </div>

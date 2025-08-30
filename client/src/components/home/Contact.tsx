@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -18,6 +19,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 const Contact = () => {
   const { ref } = useScrollReveal();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -59,12 +61,12 @@ const Contact = () => {
     <section id="contact" ref={ref} className="py-20 bg-gray-50 reveal-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="text-sm font-medium text-gold uppercase tracking-wider">Get In Touch</div>
+          <div className="text-sm font-medium text-gold uppercase tracking-wider">{t('nav.contact')}</div>
           <h2 className="mt-2 text-3xl sm:text-4xl font-serif font-bold text-charcoal">
-            Contact Us
+            {t('home.contact.title')}
           </h2>
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
-            Ready to bring your vision to life? Reach out to our team to discuss your project.
+            {t('home.contact.description')}
           </p>
         </div>
         
@@ -73,12 +75,12 @@ const Contact = () => {
             <form className="bg-white p-8 rounded-lg shadow-md" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.name')}</label>
                   <input 
                     type="text" 
                     id="name" 
                     className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                    placeholder="Your name"
+                    placeholder={t('contact.form.name')}
                     {...register("name")}
                   />
                   {errors.name && (
@@ -86,12 +88,12 @@ const Contact = () => {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.email')}</label>
                   <input 
                     type="email" 
                     id="email" 
                     className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                    placeholder="Your email"
+                    placeholder={t('contact.form.email')}
                     {...register("email")}
                   />
                   {errors.email && (
@@ -101,12 +103,12 @@ const Contact = () => {
               </div>
               
               <div className="mb-6">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.phone')}</label>
                 <input 
                   type="tel" 
                   id="phone" 
                   className={`w-full px-4 py-2 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                  placeholder="Your phone number"
+                  placeholder={t('contact.form.phone')}
                   {...register("phone")}
                 />
                 {errors.phone && (
@@ -115,12 +117,12 @@ const Contact = () => {
               </div>
               
               <div className="mb-6">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.message')}</label>
                 <textarea 
                   id="message" 
                   rows={5} 
                   className={`w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                  placeholder="Tell us about your project..."
+                  placeholder={t('contact.form.message')}
                   {...register("message")}
                 ></textarea>
                 {errors.message && (
@@ -137,7 +139,7 @@ const Contact = () => {
                   <span className="flex items-center justify-center">
                     <i className="fas fa-spinner fa-spin mr-2"></i> Sending...
                   </span>
-                ) : "Send Message"}
+                ) : t('contact.form.submit')}
               </button>
             </form>
           </div>
