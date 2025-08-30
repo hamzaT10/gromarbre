@@ -3,7 +3,6 @@ import { Route, Switch } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
-import SplashScreen from "./components/home/SplashScreen";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import HomePage from "./pages/HomePage";
@@ -31,15 +30,10 @@ function Router() {
 }
 
 function App() {
-  // We no longer need to control loading state here
-  // The SplashScreen component will manage its own visibility
   
   return (
     <QueryClientProvider client={queryClient}>
-      {/* SplashScreen will auto-hide itself when animation completes */}
-      <SplashScreen />
       
-      {/* Main application appears behind splash screen */}
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">
