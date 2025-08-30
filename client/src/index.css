@@ -18,55 +18,59 @@
 
 @layer utilities {
   .text-gold {
-    @apply text-[#E3A13B];
+    @apply text-[#f7941d];
   }
   
   .text-gold-dark {
-    @apply text-[#C28A2E];
+    @apply text-[#e6840f];
   }
   
   .bg-gold {
-    @apply bg-[#E3A13B];
+    @apply bg-[#f7941d];
   }
   
   .bg-gold-light {
-    @apply bg-[#F2C066];
+    @apply bg-[#ff9f33];
   }
   
   .bg-gold-dark {
-    @apply bg-[#C28A2E];
+    @apply bg-[#e6840f];
   }
   
   .border-gold {
-    @apply border-[#E3A13B];
+    @apply border-[#f7941d];
   }
   
   .hover\:bg-gold:hover {
-    @apply bg-[#E3A13B];
+    @apply bg-[#f7941d];
   }
   
   .hover\:bg-gold-dark:hover {
-    @apply bg-[#C28A2E];
+    @apply bg-[#e6840f];
   }
   
   .hover\:text-gold:hover {
-    @apply text-[#E3A13B];
+    @apply text-[#f7941d];
   }
   
   .hover\:border-gold:hover {
-    @apply border-[#E3A13B];
+    @apply border-[#f7941d];
   }
 
   .bg-blue-dark {
-    @apply bg-[#1C5682];
+    @apply bg-[#9db8d4];
   }
   
   .bg-blue-light {
-    @apply bg-[#2A7BBF];
+    @apply bg-[#b0c4de];
   }
   
   .text-blue-dark {
-    @apply text-[#1C5682];
+    @apply text-[#9db8d4];
+  }
+  
+  .text-blue-light {
+    @apply text-[#b0c4de];
   }
 
   .text-charcoal {
@@ -100,7 +104,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background-color: rgba(227, 161, 59, 0.2);
+  background-color: rgba(247, 148, 29, 0.2);
   transition: all 0.4s ease;
   z-index: -1;
 }
