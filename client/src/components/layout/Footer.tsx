@@ -16,12 +16,12 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-gray-300">
-              Premium marble solutions for luxury spaces. With over 20 years of expertise, we bring timeless elegance to every project.
+              {t('footer.description')}
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-serif font-semibold mb-6">Quick Links</h3>
+            <h3 className="text-lg font-serif font-semibold mb-6">{t('ui.quickLinks')}</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/">
@@ -61,54 +61,54 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link href="/services#custom-design">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Custom Design</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.design')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services#installation">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Installation</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.installation')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services#restoration">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Restoration</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.maintenance')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services#maintenance">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Maintenance</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.maintenance')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services#sourcing">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Sourcing</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.fabrication')}</a>
                 </Link>
               </li>
               <li>
                 <Link href="/services#consultation">
-                  <a className="text-gray-300 hover:text-gold transition-colors">Consultation</a>
+                  <a className="text-gray-300 hover:text-gold transition-colors">{t('home.services.design')}</a>
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-serif font-semibold mb-6">Newsletter</h3>
+            <h3 className="text-lg font-serif font-semibold mb-6">{t('ui.newsletter')}</h3>
             <p className="text-gray-300 mb-4">
-              Subscribe to receive updates on new products and projects.
+              {t('footer.newsletter.desc')}
             </p>
             <form className="mb-4" onSubmit={(e) => e.preventDefault()}>
               <div className="flex">
                 <input 
                   type="email" 
-                  placeholder="Your email" 
+                  placeholder={t('footer.email')} 
                   className="flex-grow px-4 py-2 rounded-l-md focus:outline-none text-gray-800"
                 />
                 <button 
                   type="submit" 
                   className="bg-gold text-white px-4 py-2 rounded-r-md hover:bg-gold-dark transition-colors"
                 >
-                  Subscribe
+                  {t('ui.subscribe')}
                 </button>
               </div>
             </form>

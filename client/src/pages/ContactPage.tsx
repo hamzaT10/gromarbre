@@ -99,7 +99,7 @@ const ContactPage = () => {
               {/* Contact Information */}
               <div className="lg:w-1/3 mb-12 lg:mb-0">
                 <div className="bg-blue-dark text-white p-8 rounded-lg shadow-md mb-8">
-                  <h2 className="text-2xl font-serif font-bold mb-6">Get In Touch</h2>
+                  <h2 className="text-2xl font-serif font-bold mb-6">{t('contact.info.title')}</h2>
                   
                   <div className="space-y-6">
                     <div className="flex items-start">
@@ -107,10 +107,10 @@ const ContactPage = () => {
                         <i className="fas fa-map-marker-alt"></i>
                       </div>
                       <div className="ml-3">
-                        <h3 className="font-medium">Visit Us</h3>
+                        <h3 className="font-medium">{t('contact.info.address')}</h3>
                         <p className="mt-1 text-gray-300">
                           321 Avenue Mohammed V<br />
-                          Casablanca, Morocco
+                          {t('footer.address')}
                         </p>
                       </div>
                     </div>
@@ -120,10 +120,10 @@ const ContactPage = () => {
                         <i className="fas fa-phone-alt"></i>
                       </div>
                       <div className="ml-3">
-                        <h3 className="font-medium">Call Us</h3>
+                        <h3 className="font-medium">{t('footer.phone')}</h3>
                         <p className="mt-1 text-gray-300">
                           +212-5xx-xxxxxx<br />
-                          Monday-Friday, 9am-6pm
+                          {t('contact.info.hours.weekday')}
                         </p>
                       </div>
                     </div>
@@ -133,7 +133,7 @@ const ContactPage = () => {
                         <i className="fas fa-envelope"></i>
                       </div>
                       <div className="ml-3">
-                        <h3 className="font-medium">Email Us</h3>
+                        <h3 className="font-medium">{t('footer.email')}</h3>
                         <p className="mt-1 text-gray-300">
                           info@gromarbre.ma<br />
                           sales@gromarbre.ma
@@ -159,19 +159,16 @@ const ContactPage = () => {
                 </div>
                 
                 <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-                  <h2 className="text-2xl font-serif font-bold mb-6 text-charcoal">Business Hours</h2>
+                  <h2 className="text-2xl font-serif font-bold mb-6 text-charcoal">{t('contact.info.hours')}</h2>
                   <ul className="space-y-3">
                     <li className="flex justify-between">
-                      <span>Monday - Friday</span>
-                      <span className="font-medium">9:00 AM - 6:00 PM</span>
+                      <span>{t('contact.info.hours.weekday')}</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Saturday</span>
-                      <span className="font-medium">10:00 AM - 2:00 PM</span>
+                      <span>{t('contact.info.hours.saturday')}</span>
                     </li>
                     <li className="flex justify-between">
-                      <span>Sunday</span>
-                      <span className="font-medium">Closed</span>
+                      <span>{t('contact.info.hours.sunday')}</span>
                     </li>
                   </ul>
                 </div>
@@ -180,17 +177,17 @@ const ContactPage = () => {
               {/* Contact Form */}
               <div className="lg:w-2/3">
                 <div className="bg-white p-8 rounded-lg shadow-md">
-                  <h2 className="text-2xl font-serif font-bold mb-6 text-charcoal">Send Us a Message</h2>
+                  <h2 className="text-2xl font-serif font-bold mb-6 text-charcoal">{t('contact.form.title')}</h2>
                   
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.name')}*</label>
                         <input 
                           type="text" 
                           id="name" 
                           className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                          placeholder="Your name"
+                          placeholder={t('contact.form.name')}
                           {...register("name")}
                         />
                         {errors.name && (
@@ -198,12 +195,12 @@ const ContactPage = () => {
                         )}
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.email')}*</label>
                         <input 
                           type="email" 
                           id="email" 
                           className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                          placeholder="Your email"
+                          placeholder={t('contact.form.email')}
                           {...register("email")}
                         />
                         {errors.email && (
@@ -214,12 +211,12 @@ const ContactPage = () => {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.phone')}*</label>
                         <input 
                           type="tel" 
                           id="phone" 
                           className={`w-full px-4 py-2 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                          placeholder="Your phone number"
+                          placeholder={t('contact.form.phone')}
                           {...register("phone")}
                         />
                         {errors.phone && (
@@ -227,12 +224,12 @@ const ContactPage = () => {
                         )}
                       </div>
                       <div>
-                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject*</label>
+                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.subject')}*</label>
                         <input 
                           type="text" 
                           id="subject" 
                           className={`w-full px-4 py-2 border ${errors.subject ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                          placeholder="Message subject"
+                          placeholder={t('contact.form.subject')}
                           {...register("subject")}
                         />
                         {errors.subject && (
@@ -242,12 +239,12 @@ const ContactPage = () => {
                     </div>
                     
                     <div className="mb-6">
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message*</label>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">{t('contact.form.message')}*</label>
                       <textarea 
                         id="message" 
                         rows={6} 
                         className={`w-full px-4 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-gold focus:border-transparent`}
-                        placeholder="Tell us about your project or inquiry..."
+                        placeholder={t('contact.form.message')}
                         {...register("message")}
                       ></textarea>
                       {errors.message && (
@@ -264,7 +261,7 @@ const ContactPage = () => {
                         <span className="flex items-center justify-center">
                           <i className="fas fa-spinner fa-spin mr-2"></i> Sending...
                         </span>
-                      ) : "Send Message"}
+                      ) : t('contact.form.submit')}
                     </button>
                   </form>
                 </div>

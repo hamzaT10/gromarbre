@@ -65,7 +65,7 @@ const ProductsPage = () => {
               </h1>
               <div className="w-24 h-1 bg-gold mx-auto my-6"></div>
               <p className="max-w-2xl mx-auto text-lg text-gray-300">
-                Explore our selection of fine marble varieties from around the world.
+                {t('products.subtitle')}
               </p>
             </motion.div>
           </div>
@@ -108,7 +108,7 @@ const ProductsPage = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src={product.image} 
-                      alt={product.name} 
+                      alt={t(product.nameKey)} 
                       className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                     />
                   </div>
@@ -119,16 +119,9 @@ const ProductsPage = () => {
                     <h3 className="font-serif text-xl font-bold text-charcoal">{t(product.nameKey)}</h3>
                     <p className="mt-2 text-gray-600 text-sm">{t(product.descKey)}</p>
                     <div className="mt-4 flex justify-between items-center">
-                      <Link href={`/products/${product.id}`}>
-                        <a className="inline-block text-gold hover:underline text-sm">
-                          View Details <i className="fas fa-arrow-right ml-1"></i>
-                        </a>
+                      <Link href={`/products/${product.id}`} className="inline-block text-gold hover:underline text-sm">
+                        {t('ui.viewDetails')} <i className="fas fa-arrow-right ml-1"></i>
                       </Link>
-                      {product.priceRange && (
-                        <span className="text-sm text-gray-600">
-                          {product.priceRange}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -141,15 +134,13 @@ const ProductsPage = () => {
         <section className="py-16 bg-blue-dark text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-serif font-bold mb-6">
-              Looking for a Specific Marble?
+              {t('ui.callToAction')}
             </h2>
             <p className="max-w-2xl mx-auto mb-8 text-gray-300">
-              We can source rare and custom marble varieties for your project. Contact us with your requirements.
+              {t('products.cta.description')}
             </p>
-            <Link href="/contact">
-              <a className="inline-block px-8 py-3 bg-gold text-white font-medium rounded hover:bg-gold-dark transition-colors">
-                Request Custom Sourcing
-              </a>
+            <Link href="/contact" className="inline-block px-8 py-3 bg-gold text-white font-medium rounded hover:bg-gold-dark transition-colors">
+              {t('ui.getQuote')}
             </Link>
           </div>
         </section>

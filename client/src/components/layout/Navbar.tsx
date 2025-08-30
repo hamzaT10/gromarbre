@@ -32,10 +32,10 @@ const Navbar = () => {
     { href: "/contact", label: t('nav.contact') },
   ];
 
-  const languages: { code: Language; name: string; flag: string }[] = [
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'ar', name: 'العربية', flag: '🇲🇦' },
+  const languages: { code: Language; name: string; display: string }[] = [
+    { code: 'fr', name: 'Français', display: 'FR' },
+    { code: 'en', name: 'English', display: 'EN' },
+    { code: 'ar', name: 'العربية', display: 'AR' },
   ];
 
   return (
@@ -58,20 +58,23 @@ const Navbar = () => {
             ))}
             
             {/* Language Selector */}
-            <div className="relative">
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value as Language)}
-                className={`bg-transparent border border-gold rounded px-2 py-1 text-sm font-medium transition-colors ${
-                  isScrolled ? 'text-charcoal' : 'text-white'
-                } hover:bg-gold hover:text-white focus:outline-none focus:ring-2 focus:ring-gold`}
-              >
-                {languages.map((lang) => (
-                  <option key={lang.code} value={lang.code} className="bg-white text-charcoal">
-                    {lang.flag} {lang.name}
-                  </option>
-                ))}
-              </select>
+            <div className="flex items-center space-x-1">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => setLanguage(lang.code)}
+                  className={`px-2 py-1 text-sm font-medium rounded transition-colors ${
+                    language === lang.code 
+                      ? 'bg-gold text-white' 
+                      : isScrolled 
+                        ? 'text-charcoal hover:bg-gold hover:text-white'
+                        : 'text-white hover:bg-gold hover:text-white'
+                  }`}
+                  title={lang.name}
+                >
+                  {lang.display}
+                </button>
+              ))}
             </div>
           </div>
           <div className="flex items-center md:hidden">
@@ -104,18 +107,21 @@ const Navbar = () => {
               ))}
               
               {/* Mobile Language Selector */}
-              <div className="px-3 py-2">
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as Language)}
-                  className="w-full bg-white border border-gold rounded px-2 py-2 text-sm font-medium text-charcoal hover:bg-gold hover:text-white focus:outline-none focus:ring-2 focus:ring-gold transition-colors"
-                >
-                  {languages.map((lang) => (
-                    <option key={lang.code} value={lang.code} className="bg-white text-charcoal">
-                      {lang.flag} {lang.name}
-                    </option>
-                  ))}
-                </select>
+              <div className="px-3 py-2 flex justify-center space-x-2">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => setLanguage(lang.code)}
+                    className={`px-3 py-2 text-sm font-medium rounded transition-colors ${
+                      language === lang.code 
+                        ? 'bg-gold text-white' 
+                        : 'text-charcoal hover:bg-gold hover:text-white'
+                    }`}
+                    title={lang.name}
+                  >
+                    {lang.display}
+                  </button>
+                ))}
               </div>
             </div>
           </motion.div>

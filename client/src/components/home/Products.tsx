@@ -51,7 +51,7 @@ const Products = () => {
                 <h3 className="font-serif text-lg font-bold text-charcoal">{t(product.nameKey)}</h3>
                 <p className="mt-2 text-gray-600 text-sm">{t(product.descKey)}</p>
                 <Link href={`/products/${product.id}`} className="mt-4 inline-block text-gold hover:underline text-sm">
-                  {t('nav.products')} <i className="fas fa-arrow-right ml-1"></i>
+                  {t('ui.viewDetails')} <i className="fas fa-arrow-right ml-1"></i>
                 </Link>
               </div>
             </div>
@@ -59,10 +59,8 @@ const Products = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Link href="/products">
-            <a className="marble-button inline-block px-8 py-3 border-2 border-gold text-gold font-medium rounded hover:bg-gold hover:text-white transition-colors">
-              Explore All Marble Products
-            </a>
+          <Link href="/products" className="marble-button inline-block px-8 py-3 border-2 border-gold text-gold font-medium rounded hover:bg-gold hover:text-white transition-colors">
+            {t('ui.learnMore')}
           </Link>
         </div>
       </div>

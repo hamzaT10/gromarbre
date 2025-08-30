@@ -103,6 +103,9 @@ const translations: Record<Language, Record<string, string>> = {
     'home.contact.description': 'Prêt à transformer votre espace ? Contactez nos experts pour une consultation gratuite.',
     'home.contact.cta': 'Demander un Devis',
     
+    // Products page
+    'products.cta.description': 'Nous pouvons sourcer des variétés de marbre rares et personnalisées pour votre projet. Contactez-nous avec vos exigences.',
+    
     // Footer
     'footer.company': 'Entreprise',
     'footer.services': 'Services',
@@ -111,6 +114,11 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.address': 'Casablanca, Maroc',
     'footer.phone': 'Téléphone',
     'footer.email': 'Email',
+    'footer.newsletter.desc': 'Abonnez-vous pour recevoir nos actualités et nouveaux projets.',
+    'footer.description': 'Solutions de marbre premium pour espaces de luxe. Avec plus de 20 ans d\'expertise, nous apportons une élégance intemporelle à chaque projet.',
+    
+    // Products page
+    'products.subtitle': 'Explorez notre sélection de variétés de marbre fins du monde entier.',
     
     // Contact page
     'contact.title': 'Contactez Gromarbre',
@@ -127,6 +135,18 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.info.hours.weekday': 'Lun - Ven: 8h00 - 18h00',
     'contact.info.hours.saturday': 'Sam: 8h00 - 14h00',
     'contact.info.hours.sunday': 'Dim: Fermé',
+    'contact.form.title': 'Envoyez-nous un Message',
+    'contact.form.sending': 'Envoi en cours...',
+    'contact.info.follow': 'Suivez-Nous',
+    
+    // Additional UI elements
+    'ui.viewDetails': 'Voir Détails',
+    'ui.learnMore': 'En Savoir Plus',
+    'ui.getQuote': 'Demander un Devis',
+    'ui.callToAction': 'Prêt à Transformer Votre Espace?',
+    'ui.newsletter': 'Newsletter',
+    'ui.subscribe': 'S\'abonner',
+    'ui.quickLinks': 'Liens Rapides',
   },
   
   en: {
@@ -175,6 +195,9 @@ const translations: Record<Language, Record<string, string>> = {
     'home.contact.description': 'Ready to transform your space? Contact our experts for a free consultation.',
     'home.contact.cta': 'Request a Quote',
     
+    // Products page
+    'products.cta.description': 'We can source rare and custom marble varieties for your project. Contact us with your requirements.',
+    
     // Footer
     'footer.company': 'Company',
     'footer.services': 'Services',
@@ -183,6 +206,11 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.address': 'Casablanca, Morocco',
     'footer.phone': 'Phone',
     'footer.email': 'Email',
+    'footer.newsletter.desc': 'Subscribe to receive updates on new products and projects.',
+    'footer.description': 'Premium marble solutions for luxury spaces. With over 20 years of expertise, we bring timeless elegance to every project.',
+    
+    // Products page
+    'products.subtitle': 'Explore our selection of fine marble varieties from around the world.',
     
     // Contact page
     'contact.title': 'Contact Gromarbre',
@@ -199,6 +227,18 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.info.hours.weekday': 'Mon - Fri: 8:00 AM - 6:00 PM',
     'contact.info.hours.saturday': 'Sat: 8:00 AM - 2:00 PM',
     'contact.info.hours.sunday': 'Sun: Closed',
+    'contact.form.title': 'Send Us a Message',
+    'contact.form.sending': 'Sending...',
+    'contact.info.follow': 'Follow Us',
+    
+    // Additional UI elements
+    'ui.viewDetails': 'View Details',
+    'ui.learnMore': 'Learn More',
+    'ui.getQuote': 'Get Quote',
+    'ui.callToAction': 'Ready to Transform Your Space?',
+    'ui.newsletter': 'Newsletter',
+    'ui.subscribe': 'Subscribe',
+    'ui.quickLinks': 'Quick Links',
   },
   
   ar: {
@@ -247,6 +287,9 @@ const translations: Record<Language, Record<string, string>> = {
     'home.contact.description': 'مستعد لتحويل مساحتك؟ اتصل بخبرائنا للحصول على استشارة مجانية.',
     'home.contact.cta': 'طلب عرض سعر',
     
+    // Products page
+    'products.cta.description': 'يمكننا توفير أنواع نادرة ومخصصة من الرخام لمشروعك. اتصل بنا مع متطلباتك.',
+    
     // Footer
     'footer.company': 'الشركة',
     'footer.services': 'الخدمات',
@@ -255,6 +298,8 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.address': 'الدار البيضاء، المغرب',
     'footer.phone': 'الهاتف',
     'footer.email': 'البريد الإلكتروني',
+    'footer.newsletter.desc': 'اشترك لتلقي التحديثات حول المنتجات والمشاريع الجديدة.',
+    'footer.description': 'حلول الرخام الفاخرة للمساحات الراقية. مع أكثر من 20 عاماً من الخبرة، نضفي الأناقة الخالدة على كل مشروع.',
     
     // Contact page
     'contact.title': 'اتصل بجرومربر',
@@ -271,5 +316,17 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.info.hours.weekday': 'الاثنين - الجمعة: 8:00 ص - 6:00 م',
     'contact.info.hours.saturday': 'السبت: 8:00 ص - 2:00 م',
     'contact.info.hours.sunday': 'الأحد: مغلق',
+    'contact.form.title': 'أرسل لنا رسالة',
+    'contact.form.sending': 'جاري الإرسال...',
+    'contact.info.follow': 'تابعونا',
+    
+    // Additional UI elements
+    'ui.viewDetails': 'عرض التفاصيل',
+    'ui.learnMore': 'اعرف المزيد',
+    'ui.getQuote': 'احصل على عرض سعر',
+    'ui.callToAction': 'مستعد لتحويل مساحتك؟',
+    'ui.newsletter': 'النشرة الإخبارية',
+    'ui.subscribe': 'اشترك',
+    'ui.quickLinks': 'روابط سريعة',
   }
 };
