@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedLogo from "../shared/AnimatedLogo";
@@ -7,8 +7,10 @@ import { useLanguage, Language } from "../../contexts/LanguageContext";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [location] = useLocation();
   const { language, setLanguage, t } = useLanguage();
+  const languageDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +24,21 @@ const Navbar = () => {
   useEffect(() => {
     // Close mobile menu when location changes
     setMobileMenuOpen(false);
+    setLanguageDropdownOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target as Node)) {
+        setLanguageDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const navLinks = [
     { href: "/", label: t('nav.home') },
@@ -58,23 +74,50 @@ const Navbar = () => {
             ))}
             
             {/* Language Selector */}
-            <div className="flex items-center space-x-1">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => setLanguage(lang.code)}
-                  className={`px-2 py-1 text-sm font-medium rounded transition-colors ${
-                    language === lang.code 
-                      ? 'bg-gold text-white' 
-                      : isScrolled 
-                        ? 'text-charcoal hover:bg-gold hover:text-white'
-                        : 'text-white hover:bg-gold hover:text-white'
-                  }`}
-                  title={lang.name}
-                >
-                  {lang.display}
-                </button>
-              ))}
+            <div className="relative" ref={languageDropdownRef}>
+              <button
+                onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
+                className={`flex items-center px-3 py-2 text-sm font-medium rounded transition-colors ${
+                  isScrolled 
+                    ? 'text-charcoal hover:bg-gold hover:text-white'
+                    : 'text-white hover:bg-gold hover:text-white'
+                }`}
+              >
+                {languages.find(lang => lang.code === language)?.display}
+                <i className={`fas fa-chevron-down ml-2 text-xs transition-transform ${
+                  languageDropdownOpen ? 'rotate-180' : ''
+                }`}></i>
+              </button>
+              
+              <AnimatePresence>
+                {languageDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full right-0 mt-2 bg-white rounded-md shadow-lg border border-gray-200 py-1 min-w-[100px] z-50"
+                  >
+                    {languages.map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code);
+                          setLanguageDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                          language === lang.code 
+                            ? 'bg-gold text-white' 
+                            : 'text-charcoal hover:bg-gold hover:text-white'
+                        }`}
+                        title={lang.name}
+                      >
+                        {lang.display}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
           <div className="flex items-center md:hidden">
@@ -107,21 +150,27 @@ const Navbar = () => {
               ))}
               
               {/* Mobile Language Selector */}
-              <div className="px-3 py-2 flex justify-center space-x-2">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code)}
-                    className={`px-3 py-2 text-sm font-medium rounded transition-colors ${
-                      language === lang.code 
-                        ? 'bg-gold text-white' 
-                        : 'text-charcoal hover:bg-gold hover:text-white'
-                    }`}
-                    title={lang.name}
-                  >
-                    {lang.display}
-                  </button>
-                ))}
+              <div className="px-3 py-2">
+                <div className="text-sm font-medium text-gray-600 mb-2">Language</div>
+                <div className="space-y-1">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => {
+                        setLanguage(lang.code);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded transition-colors ${
+                        language === lang.code 
+                          ? 'bg-gold text-white' 
+                          : 'text-charcoal hover:bg-gold hover:text-white'
+                      }`}
+                      title={lang.name}
+                    >
+                      {lang.display} - {lang.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
