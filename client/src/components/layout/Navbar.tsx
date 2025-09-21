@@ -25,6 +25,12 @@ const Navbar = () => {
     // Close mobile menu when location changes
     setMobileMenuOpen(false);
     setLanguageDropdownOpen(false);
+    
+    // Scroll to top on navigation
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location]);
 
   useEffect(() => {
